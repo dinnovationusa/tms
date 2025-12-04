@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TransportPro - Sistema Integral de Gestión de Transporte</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a73e8;
+            --secondary-color: #34a853;
+            --accent-color: #ea4335;
+            --warning-color: #fbbc05;
+            --dark-color: #202124;
+            --light-color: #f8f9fa;
+            --gray-color: #5f6368;
+            --border-color: #dadce0;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 10px 30px rgba(0, 0, 0, 0.15);
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: var(--dark-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .logo i {
+            margin-right: 12px;
+            font-size: 35px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-link {
+            color: var(--dark-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .btn-demo {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 25px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-demo:hover {
+            background-color: #1765cc;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(26, 115, 232, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 120px 0 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,154.7C960,171,1056,181,1152,165.3C1248,149,1344,107,1392,85.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+            background-size: cover;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-text h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero-text p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            opacity: 0.95;
+            animation: fadeInUp 0.8s ease 0.2s;
+            animation-fill-mode: both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            animation: fadeInUp 0.8s ease 0.4s;
+            animation-fill-mode: both;
+        }
+
+        .btn-primary {
+            background-color: white;
+            color: var(--primary-color);
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: white;
+            padding: 15px 30px;
+            border: 2px solid white;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-secondary:hover {
+            background-color: white;
+            color: var(--primary-color);
+        }
+
+        .hero-image {
+            position: relative;
+            animation: fadeInRight 0.8s ease 0.6s;
+            animation-fill-mode: both;
+        }
+
+        .hero-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Features Overview */
+        .features-overview {
+            padding: 80px 0;
+            background-color: var(--light-color);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-bottom: 20px;
+        }
+
+        .section-subtitle {
+            font-size: 18px;
+            color: var(--gray-color);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+
+        .feature-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+
+        .feature-description {
+            color: var(--gray-color);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-item {
+            padding: 8px 0;
+            color: var(--dark-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .feature-item i {
+            color: var(--secondary-color);
+            margin-right: 10px;
+            font-size: 14px;
+        }
+
+        /* Modules Section */
+        .modules-section {
+            padding: 80px 0;
+            background-color: white;
+        }
+
+        .module-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+
+        .module-tab {
+            padding: 12px 25px;
+            background-color: var(--light-color);
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            color: var(--gray-color);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .module-tab.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .module-tab:hover {
+            transform: translateY(-2px);
+        }
+
+        .module-content {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .module-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .module-detail {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            margin-bottom: 50px;
+        }
+
+        .module-text h3 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: var(--dark-color);
+        }
+
+        .module-text p {
+            font-size: 16px;
+            color: var(--gray-color);
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .module-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .module-feature {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background-color: var(--light-color);
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .module-feature:hover {
+            background-color: #e8f0fe;
+            transform: translateX(5px);
+        }
+
+        .module-feature i {
+            color: var(--primary-color);
+            margin-right: 12px;
+            font-size: 20px;
+        }
+
+        .module-image {
+            position: relative;
+        }
+
+        .module-image img {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Benefits Section */
+        .benefits-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .benefit-card {
+            text-align: center;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-10px);
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .benefit-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 35px;
+            margin: 0 auto 20px;
+        }
+
+        .benefit-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .benefit-description {
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 100px 0;
+            background-color: var(--light-color);
+            text-align: center;
+        }
+
+        .cta-content h2 {
+            font-size: 42px;
+            margin-bottom: 20px;
+            color: var(--dark-color);
+        }
+
+        .cta-content p {
+            font-size: 18px;
+            color: var(--gray-color);
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 50px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-link:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-text h1 {
+                font-size: 36px;
+            }
+
+            .module-detail {
+                grid-template-columns: 1fr;
+            }
+
+            .module-features {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-container">
+                <div class="logo">
+                    <i class="fas fa-truck"></i>
+                    <span>TransportPro</span>
+                </div>
+                <nav>
+                    <ul class="nav-menu">
+                        <li><a href="#home" class="nav-link">Inicio</a></li>
+                        <li><a href="#modules" class="nav-link">Módulos</a></li>
+                        <li><a href="#features" class="nav-link">Características</a></li>
+                        <li><a href="#benefits" class="nav-link">Beneficios</a></li>
+                        <li><a href="#contact" class="nav-link">Contacto</a></li>
+                    </ul>
+                </nav>
+                <a href="#" class="btn-demo">Solicitar Demo</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>La Solución Integral para la Gestión de tu Empresa de Transporte</h1>
+                    <p>Optimiza operaciones, controla mantenimientos y maximiza la eficiencia de tu flota con nuestro software 100% Cloud.</p>
+                    <div class="hero-buttons">
+                        <a href="#modules" class="btn-primary">Explorar Módulos</a>
+                        <a href="#" class="btn-secondary">Ver Demo</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="https://picsum.photos/seed/transport/600/400" alt="Sistema de Transporte">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features-overview" id="features">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2 class="section-title">Módulos Principales</h2>
+                <p class="section-subtitle">Control total de cada aspecto de tu operación de transporte</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <div class="feature-icon" style="background-color: rgba(26, 115, 232, 0.1); color: var(--primary-color);">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3 class="feature-title">Operaciones</h3>
+                    <p class="feature-description">Control completo de todas las operaciones diarias con números únicos por servicio.</p>
+                    <ul class="feature-list">
+                        <li class="feature-item"><i class="fas fa-check"></i> Órdenes de trabajo</li>
+                        <li class="feature-item"><i class="fas fa-check"></i> Devolución de contenedores</li>
+                        <li class="feature-item"><i class="fas fa-check"></i> Órdenes de viajes</li>
+                        <li class="feature-item"><i class="fas fa-check"></i> Control de inventarios</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon" style="background-color: rgba(52, 168, 83, 0.1); color: var(--secondary-color);">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3 class="feature-title">Mantenimientos</h3>
+                    <p class="feature-description">Programa y controla mantenimientos preventivos y correctivos de tu flota.</p>
+                    <ul class="feature-list">
+                        <li class="feature-item"><i class="fas fa-check"></i> Control por kilometraje</li>
+                        <li class="feature-item"><i class="fas fa-check"></i> Alertas automáticas</li>
+                        <li class="feature-item"><i class="fas fa-check"></i> Historial completo</li>
+                        <li class="feature-item"><i class="fas fa-check"></i> Costos por unidad</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon" style="background-color: rgba(234, 67, 53, 0.1); color: var(--accent-color);">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <h3 class="feature-title">Tesorería</h3>
+                    <p class="feature-description">Gestión financiera completa con control total de ingresos y egresos.</p>
+                    <ul class="feature-list">
+                        <li class="feature-item"><i class="fas fa-check"></i> Flujo de caja proyectado</li>
+                        <li class="feature-item"><i class="fas fa-check"></i> Conciliación bancaria</li>
+                        <li class="feature-item"><i class="fas fa-check"></i> Cuentas por pagar/cobrar</li>
+                        <li class="feature-item"><i class="fas fa-check"></i> Reportes en tiempo real</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon" style="background-color: rgba(251, 188, 5, 0.1); color: var(--warning-color);">
+                        <i class="fas fa-file-invoice"></i>
+                    </div>
+                    <h3 class="feature-title">Facturación</h3>
+                    <p class="feature-description">Emite comprobantes electrónicos con validación SUNAT y DGI Panamá.</p>
+                    <ul class="feature-list">
+                        <li class="feature-item"><i class="fas fa-check"></i> Factura, boleta y guía</li>
+                        <li class="feature-item"><i class="fas fa-check"></i> Envío automático SUNAT</li>
+                        <li class="feature-item"><i class="fas fa-check"></i> Notas de crédito</li>
+                        <li class="feature-item"><i class="fas fa-check"></i> Reportes diarios</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon" style="background-color: rgba(103, 58, 183, 0.1); color: #673ab7;">
+                        <i class="fas fa-folder-open"></i>
+                    </div>
+                    <h3 class="feature-title">Documentos</h3>
+                    <p class="feature-description">Almacén digital seguro para todos tus documentos importantes.</p>
+                    <ul class="feature-list">
+                        <li class="feature-item"><i class="fas fa-check"></i> Almacén por cliente</li>
+                        <li class="feature-item"><i class="fas fa-check"></i> Control de vencimientos</li>
+                        <li class="feature-item"><i class="fas fa-check"></i> Acceso por permisos</li>
+                        <li class="feature-item"><i class="fas fa-check"></i> Historial de cambios</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon" style="background-color: rgba(0, 150, 136, 0.1); color: #009688;">
+                        <i class="fas fa-car-mechanic"></i>
+                    </div>
+                    <h3 class="feature-title">Taller</h3>
+                    <p class="feature-description">Control detallado de reparaciones internas y costos asociados.</p>
+                    <ul class="feature-list">
+                        <li class="feature-item"><i class="fas fa-check"></i> Órdenes de trabajo internas</li>
+                        <li class="feature-item"><i class="fas fa-check"></i> Control de repuestos</li>
+                        <li class="feature-item"><i class="fas fa-check"></i> Asignación de mecánicos</li>
+                        <li class="feature-item"><i class="fas fa-check"></i> Control de tiempos</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="modules-section" id="modules">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2 class="section-title">Explora Nuestros Módulos en Detalle</h2>
+                <p class="section-subtitle">Cada módulo diseñado para optimizar una área específica de tu operación</p>
+            </div>
+
+            <div class="module-tabs">
+                <button class="module-tab active" onclick="showModule('operations')">Operaciones</button>
+                <button class="module-tab" onclick="showModule('maintenance')">Mantenimientos</button>
+                <button class="module-tab" onclick="showModule('treasury')">Tesorería</button>
+                <button class="module-tab" onclick="showModule('billing')">Facturación</button>
+                <button class="module-tab" onclick="showModule('documents')">Documentos</button>
+                <button class="module-tab" onclick="showModule('workshop')">Taller</button>
+            </div>
+
+            <!-- Operations Module -->
+            <div id="operations-module" class="module-content active">
+                <div class="module-detail">
+                    <div class="module-text">
+                        <h3>Control Total de Operaciones</h3>
+                        <p>Nuestro módulo de operaciones genera un número único por servicio, permitiendo controlar la operación completa desde su inicio hasta su finalización. Optimiza procesos y mejora la eficiencia operativa.</p>
+                        <div class="module-features">
+                            <div class="module-feature">
+                                <i class="fas fa-clipboard-list"></i>
+                                <span>Órdenes de trabajo</span>
+                            </div>
+                            <div class="module-feature">
+                                <i class="fas fa-undo"></i>
+                                <span>Devolución de contenedores</span>
+                            </div>
+                            <div class="module-feature">
+                                <i class="fas fa-wrench"></i>
+                                <span>Mantenimiento de vehículos</span>
+                            </div>
+                            <div class="module-feature">
+                                <i class="fas fa-route"></i>
+                                <span>Órdenes de viajes</span>
+                            </div>
+                            <div class="module-feature">
+                                <i class="fas fa-gas-pump"></i>
+                                <span>Vales de combustibles</span>
+                            </div>
+                            <div class="module-feature">
+                                <i class="fas fa-circle"></i>
+                                <span>Control de llantas</span>
+                            </div>
+                            <div class="module-feature">
+                                <i class="fas fa-boxes"></i>
+                                <span>Inventarios</span>
+                            </div>
+                            <div class="module-feature">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Reportes en tiempo real</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="module-image">
+                        <img src="https://picsum.photos/seed/operations/500/350" alt="Operaciones">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Maintenance Module -->
+            <div id="maintenance-module" class="module-content">
+                <div class="module-detail">
+                    <div class="module-text">
+                        <h3>Gestión Inteligente de Mantenimientos</h3>
+                        <p>Administra y programa mantenimientos para asegurar la operatividad continua de tu flota. Sistema completo de alertas y control de costos por unidad.</p>
+                        <div class="module-features">
+                            <div class="module-feature">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>Mantenimientos preventivos</span>
+                            </div>
+                            <div class="module-feature">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <span>Mantenimientos correctivos</span>
+                            </div>
+                            <div class="module-feature">
+                                <i class="fas fa-tachometer-alt"></i>
+                                <span>Control por kilometraje</span>
+                            </div>
+                            <div class="module-feature">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>Alerta por fecha programada</span>
+                            </div>
+                            <div class="module-feature">
+                                <i class="fas fa-history"></i>
+                                <span>Historial de intervenciones</span>
+                            </div>
+                            <div class="module-feature">
+                                <i class="fas fa-dollar-sign"></i>
+                                <span>Costos asociados por unidad</span>
+                            </div>
+                            <div class="module-feature">
+                                <i class="fas fa-link"></i>
+                                <span>Vinculación con órdenes</span>
+                            </div>
+                            <div class="module-feature">
+                                <i class="fas fa-bell"></i>
+                                <span>Notificaciones automáticas</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="module-image">
+                        <img src="https://picsum.photos/seed/maintenance/500/350" alt="Mantenimientos">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Treasury Module -->
+            <div id="treasury-module" class="module-content">
+                <div class="module-detail">
+                    <div class="module-text">
+                        <h3>Control Financiero Completo</h3>
+                        <p>Gestiona ingresos, egresos y saldos con control total de tus movimientos financieros. Sistema integrado con conciliación bancaria automática.</p>
+                        <div class="module-features">
+                            <div class="module-feature">
+                                <i class="fas fa-exchange-alt"></i>
+                                <span>Registro de ingresos y egresos</span>
+                            </div>
+                            <div class="module-feature">
+                                <i class="fas fa-sync-alt"></i>
+                                <span>Conciliación bancaria</span>
+                            </div>
+                            <div class="module-feature">
+                                <i class="fas fa-cash-register"></i>
+                                <span>Control de cajas y fondos</span>
+                            </div>
+                            <div class="module-feature">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Flujo de caja proyectado</span>
+                            </div>
+                            <div class="module-feature">
+                                <i class="fas fa-file-invoice-dollar"></i>
+                                <span>Cuentas por pagar</span>
+                            </div>
+                            <div class="module-feature">
+                                <i class="fas fa-hand-holding-usd"></i>
+                                <span>Cuentas por cobrar</span>
+                            </div>
+                            <div class="module-feature">
+                                <i class="fas fa-chart-bar"></i>
+                                <span>Reportes financieros</span>
+                            </div>
+                            <div class="module-feature">
+                                <i class="fas fa-calculator"></i>
+                                <span>Cálculos automáticos</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="module-image">
+                        <img src="https://picsum.photos/seed/treasury/500/350" alt="Tesorería">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Billing Module -->
+            <div id="billing-module" class="module-content">
+                <div class="module-detail">
+                    <div class="module-text">
+                        <h3>Facturación Electrónica Simplificada</h3>
+                        <p>Emite comprobantes electrónicos con validación SUNAT y control total de tu facturación. Integración completa con los principales sistemas tributarios.</p>
+                        <div class="module-features">
+                            <div class="module-feature">
+                                <i class="fas fa-file-invoice"></i>
+                                <span>Factura, boleta y guía</span>
+                            </div>
+                            <div class="module-feature">
+                                <i class="fas fa-paper-plane"></i>
+                                <span>Envío automático SUNAT</span>
+                            </div>
+                            <div class="module-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Validación DGI Panamá</span>
+                            </div>
+                            <div class="module-feature">
+                                <i class="fas fa-times-circle"></i>
+                                <span>Anulación y nota de crédito</span>
+                            </div>
+                            <div class="module-feature">
+                                <i class="fas fa-chart-pie"></i>
+                                <span>Reportes de ventas</span>
+                            </div>
+                            <div class="module-feature">
+                                <i class="fas fa-plug"></i>
+                                <span>Integración con módulos</span>
+                            </div>
+                            <div class="module-feature">
+                                <i class="fas fa-print"></i>
+                                <span>Formatos personalizables</span>
+                            </div>
+                            <div class="module-feature">
+                                <i class="fas fa-qrcode"></i>
+                                <span>Códigos QR</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="module-image">
+                        <img src="https://picsum.photos/seed/billing/500/350" alt="Facturación">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Documents Module -->
+            <div id="documents-module" class="module-content">
+                <div class="module-detail">
+                    <div class="module-text">
+                        <h3>Gestión Documental Digital</h3>
+                        <p>Organiza y accede fácilmente a documentos clave de cada operación o cliente. Almacén digital seguro con control de permisos.</p>
+                        <div class="module-features">
+                            <div class="module-feature">
+                                <i class="fas fa-cloud"></i>
+                                <span>Almacén digital por cliente</span>
+                            </div>
+                            <div class="module-feature">
+                                <i class="fas fa-file-pdf"></i>
+                                <span>Carga de PDF y Excel</span>
+                            </div>
+                            <div class="module-feature">
+                                <i class="fas fa-clock"></i>
+                                <span>Vencimiento de documentos</span>
+                            </div>
+                            <div class="module-feature">
+                                <i class="fas fa-tags"></i>
+                                <span>Clasificación por tipo</span>
+                            </div>
+                            <div class="module-feature">
+                                <i class="fas fa-history"></i>
+                                <span>Historial de modificaciones</span>
+                            </div>
+                            <div class="module-feature">
+                                <i class="fas fa-key"></i>
+                                <span>Acceso por permisos</span>
+                            </div>
+                            <div class="module-feature">
+                                <i class="fas fa-link"></i>
+                                <span>Integración con órdenes</span>
+                            </div>
+                            <div class="module-feature">
+                                <i class="fas fa-search"></i>
+                                <span>Búsqueda avanzada</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="module-image">
+                        <img src="https://picsum.photos/seed/documents/500/350" alt="Documentos">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Workshop Module -->
+            <div id="workshop-module" class="module-content">
+                <div class="module-detail">
+                    <div class="module-text">
+                        <h3>Control de Taller Integral</h3>
+                        <p>Controla reparaciones internas con detalle por unidad, orden y repuestos utilizados. Sistema completo para gestión de taller mecánico.</p>
+                        <div class="module-features">
+                            <div class="module-feature">
+                                <i class="fas fa-wrench"></i>
+                                <span>Órdenes de trabajo internas</span>
+                            </div>
+                            <div class="module-feature">
+                                <i class="fas fa-cogs"></i>
+                                <span>Registro de repuestos</span>
+                            </div>
+                            <div class="module-feature">
+                                <i class="fas fa-user-hard-hat"></i>
+                                <span>Mano de obra detallada</span>
+                            </div>
+                            <div class="module-feature">
+                                <i class="fas fa-history"></i>
+                                <span>Historial por unidad</span>
+                            </div>
+                            <div class="module-feature">
+                                <i class="fas fa-user-tie"></i>
+                                <span>Asignación de mecánicos</span>
+                            </div>
+                            <div class="module-feature">
+                                <i class="fas fa-stopwatch"></i>
+                                <span>Control de tiempos</span>
+                            </div>
+                            <div class="module-feature">
+                                <i class="fas fa-dollar-sign"></i>
+                                <span>Costos por reparación</span>
+                            </div>
+                            <div class="module-feature">
+                                <i class="fas fa-clipboard-check"></i>
+                                <span>Control de calidad</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="module-image">
+                        <img src="https://picsum.photos/seed/workshop/500/350" alt="Taller">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="benefits-section" id="benefits">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" style="color: white;">Beneficios Clave</h2>
+                <p class="section-subtitle" style="color: rgba(255, 255, 255, 0.9);">La combinación perfecta entre software y excelente servicio</p>
+            </div>
+            <div class="benefits-grid">
+                <div class="benefit-card fade-in">
+                    <div class="benefit-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="benefit-title">Aplicativo Móvil</h3>
+                    <p class="benefit-description">Optimizado para Android, garantizando una experiencia ágil y adaptada a las necesidades del usuario.</p>
+                </div>
+                <div class="benefit-card fade-in">
+                    <div class="benefit-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3 class="benefit-title">Totalmente Adaptable</h3>
+                    <p class="benefit-description">Flexibilidad para ajustarse a diferentes entornos y necesidades, brindando máxima personalización.</p>
+                </div>
+                <div class="benefit-card fade-in">
+                    <div class="benefit-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3 class="benefit-title">Integrado con GPS</h3>
+                    <p class="benefit-description">Seguimiento en tiempo real mediante integración con sistemas GPS para mejorar tus operaciones.</p>
+                </div>
+                <div class="benefit-card fade-in">
+                    <div class="benefit-icon">
+                        <i class="fas fa-file-invoice"></i>
+                    </div>
+                    <h3 class="benefit-title">Comprobantes Electrónicos</h3>
+                    <p class="benefit-description">Emisión de facturas directamente desde nuestra plataforma, integradas con servicios externos.</p>
+                </div>
+                <div class="benefit-card fade-in">
+                    <div class="benefit-icon">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <h3 class="benefit-title">100% Cloud</h3>
+                    <p class="benefit-description">Almacenamiento y acceso seguro desde la nube, garantizando disponibilidad continua.</p>
+                </div>
+                <div class="benefit-card fade-in">
+                    <div class="benefit-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="benefit-title">Panel para Clientes</h3>
+                    <p class="benefit-description">Interfaz amigable que facilita la interacción del cliente, mejorando la experiencia.</p>
+                </div>
+                <div class="benefit-card fade-in">
+                    <div class="benefit-icon">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                    <h3 class="benefit-title">Multiusuario</h3>
+                    <p class="benefit-description">Acceso simultáneo de múltiples usuarios, favoreciendo la colaboración y trabajo en equipo.</p>
+                </div>
+                <div class="benefit-card fade-in">
+                    <div class="benefit-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <h3 class="benefit-title">Gestión de Alertas</h3>
+                    <p class="benefit-description">Configura alertas para recibir notificaciones sobre eventos clave en tu plataforma.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section" id="contact">
+        <div class="container">
+            <div class="cta-content">
+                <h2>¿Listo para Transformar tu Operación?</h2>
+                <p>Únete a las empresas que ya están optimizando sus procesos con TransportPro</p>
+                <div class="cta-buttons">
+                    <a href="#" class="btn-primary">Solicitar Demo Gratuita</a>
+                    <a href="#" class="btn-secondary">Contactar Ventas</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>TransportPro</h3>
+                    <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 20px;">La solución integral para la gestión moderna de empresas de transporte.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Producto</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Características</a></li>
+                        <li><a href="#">Módulos</a></li>
+                        <li><a href="#">Precios</a></li>
+                        <li><a href="#">Demo</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Empresa</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Sobre Nosotros</a></li>
+                        <li><a href="#">Casos de Éxito</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Carreras</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Soporte</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Centro de Ayuda</a></li>
+                        <li><a href="#">Documentación</a></li>
+                        <li><a href="#">API</a></li>
+                        <li><a href="#">Contacto</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 TransportPro. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Module Tabs Functionality
+        function showModule(moduleName) {
+            // Hide all modules
+            const modules = document.querySelectorAll('.module-content');
+            modules.forEach(module => {
+                module.classList.remove('active');
+            });
+
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.module-tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Show selected module
+            document.getElementById(moduleName + '-module').classList.add('active');
+
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Fade In Animation on Scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Header Scroll Effect
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            const header = document.querySelector('header');
+
+            if (currentScroll > 100) {
+                header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.05)';
+            }
+
+            lastScroll = currentScroll;
+        });
+
+        // Add hover effect to feature cards
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Animate numbers on scroll
+        function animateValue(element, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                element.innerHTML = Math.floor(progress * (end - start) + start);
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        // Initialize animations when page loads
+        window.addEventListener('load', () => {
+            // Add initial animations
+            document.querySelectorAll('.feature-card').forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>
